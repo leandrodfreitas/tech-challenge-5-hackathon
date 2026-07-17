@@ -1,17 +1,24 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { usePreferences } from '../../contexts/PreferencesContext'
 
-const NAV = [
+const NAV_BASIC = [
   { href: '/dashboard',    label: 'Dashboard',     icon: <HomeIcon /> },
   { href: '/atividades',   label: 'Minhas Tarefas', icon: <TaskIcon /> },
-  // { href: '/calendario',   label: 'Calendário',    icon: <CalIcon /> },
-  // { href: '/lembretes',    label: 'Lembretes',     icon: <BellIcon /> },
-  // { href: '/historico',    label: 'Histórico',     icon: <HistIcon /> },
   { href: '/perfil',       label: 'Perfil',        icon: <UserIcon /> },
-  { href: '/painel',       label: 'Configurações', icon: <CogIcon /> },
-  // { href: '/ajuda',        label: 'Ajuda',         icon: <HelpIcon /> },
+  { href: '/configuracoes',       label: 'Configurações', icon: <CogIcon /> },
+]
+
+const NAV_ADVANCED = [
+  { href: '/dashboard',    label: 'Dashboard',     icon: <HomeIcon /> },
+  { href: '/atividades',   label: 'Minhas Tarefas', icon: <TaskIcon /> },
+  { href: '/calendario',   label: 'Calendário',    icon: <CalIcon /> },
+  { href: '/lembretes',    label: 'Lembretes',     icon: <BellIcon /> },
+  { href: '/historico',    label: 'Histórico',     icon: <HistIcon /> },
+  { href: '/perfil',       label: 'Perfil',        icon: <UserIcon /> },
+  { href: '/configuracoes',       label: 'Configurações', icon: <CogIcon /> },
+  { href: '/ajuda',        label: 'Ajuda',         icon: <HelpIcon /> },
 ]
 
 function HomeIcon() { return <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> }
@@ -25,24 +32,27 @@ function HelpIcon() { return <svg width="20" height="20" fill="none" stroke="cur
 
 export function Sidebar() {
   const pathname = usePathname()
-  const [modoBasico, setModoBasico] = useState(true)
+  const { prefs } = usePreferences()
+  
+  const isSimplified = prefs.navigationMode === 'simplified'
+  const NAV = isSimplified ? NAV_BASIC : NAV_ADVANCED
 
   return (
     <aside style={{
-      width: 220, minHeight: '100vh', background: '#fff',
-      borderRight: '1px solid #e5e7eb', display: 'flex',
+      width: 220, minHeight: '100vh', background: 'var(--background)',
+      borderRight: '1px solid var(--border-color)', display: 'flex',
       flexDirection: 'column', flexShrink: 0,
     }}>
       {/* Logo */}
-      <div style={{ padding: '20px 16px 16px', borderBottom: '1px solid #f3f4f6' }}>
+      <div style={{ padding: '20px 16px 16px', borderBottom: `1px solid var(--border-color)` }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 32, height: 32, borderRadius: 10, background: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2">
+          <div style={{ width: 32, height: 32, borderRadius: 10, background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2">
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
             </svg>
           </div>
-          <span style={{ fontSize: 16, fontWeight: 600, color: '#1a1a2e' }}>
-            Senior<span style={{ color: '#2563eb' }}>Ease</span>
+          <span style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-color)' }}>
+            Senior<span style={{ color: 'var(--primary)' }}>Ease</span>
           </span>
         </div>
       </div>
@@ -57,10 +67,10 @@ export function Sidebar() {
                 <Link href={item.href} style={{
                   display: 'flex', alignItems: 'center', gap: 10,
                   padding: '9px 12px', borderRadius: 10, textDecoration: 'none',
-                  fontSize: 14, fontWeight: active ? 600 : 400,
-                  color: active ? '#2563eb' : '#6b7280',
-                  background: active ? '#eff6ff' : 'transparent',
-                  transition: 'all 0.15s',
+                  fontSize: '0.875rem', fontWeight: active ? 600 : 400,
+                  color: active ? 'var(--primary)' : 'var(--text-secondary)',
+                  background: active ? 'var(--primary-light)' : 'transparent',
+                  transition: 'var(--transition)',
                 }}
                 aria-current={active ? 'page' : undefined}
                 >
@@ -74,14 +84,14 @@ export function Sidebar() {
       </nav>
 
       {/* Footer do sidebar */}
-      <div style={{ padding: '12px 16px', borderTop: '1px solid #f3f4f6' }}>
+      <div style={{ padding: '12px 16px', borderTop: `1px solid var(--border-color)` }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-          <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#dbeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 600, color: '#1d4ed8', flexShrink: 0 }}>
+          <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--primary)', flexShrink: 0 }}>
             MS
           </div>
           <div>
-            <p style={{ fontSize: 13, fontWeight: 600, color: '#1a1a2e' }}>Maria Silva</p>
-            <p style={{ fontSize: 11, color: '#9ca3af' }}>Ver perfil</p>
+            <p style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-color)' }}>Maria Silva</p>
+            <p style={{ fontSize: '0.6875rem', color: 'var(--text-secondary)' }}>Ver perfil</p>
           </div>
         </div>
       </div>

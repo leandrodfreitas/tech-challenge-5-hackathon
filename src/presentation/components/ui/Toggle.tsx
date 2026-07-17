@@ -1,4 +1,5 @@
 'use client'
+import { useContrastStyles } from '../../hooks/useContrastStyles'
 
 interface ToggleProps {
   checked: boolean
@@ -7,22 +8,39 @@ interface ToggleProps {
 }
 
 export function Toggle({ checked, onChange, label }: ToggleProps) {
+  const contrast = useContrastStyles()
+
   return (
-    <div className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
-      <span className="text-base text-gray-600">{label}</span>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 12, paddingBottom: 12, borderBottom: `1px solid ${contrast.border}`, lastChild: { borderBottom: 'none' } }}>
+      <span style={{ fontSize: 15, color: contrast.text }}>{label}</span>
       <button
         role="switch"
         aria-checked={checked}
         aria-label={label}
         onClick={() => onChange(!checked)}
-        className={`w-11 h-6 rounded-full transition-colors relative focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
-          checked ? 'bg-blue-600' : 'bg-gray-300'
-        }`}
+        style={{
+          width: 44,
+          height: 24,
+          borderRadius: 12,
+          border: 'none',
+          background: checked ? contrast.primary : contrast.border,
+          cursor: 'pointer',
+          position: 'relative',
+          transition: 'background 0.2s',
+          flexShrink: 0,
+        }}
       >
         <span
-          className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${
-            checked ? 'left-6' : 'left-1'
-          }`}
+          style={{
+            position: 'absolute',
+            top: 3,
+            width: 18,
+            height: 18,
+            borderRadius: '50%',
+            background: '#fff',
+            transition: 'left 0.2s',
+            left: checked ? 23 : 3,
+          }}
         />
       </button>
     </div>

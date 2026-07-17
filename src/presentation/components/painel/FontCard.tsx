@@ -1,5 +1,6 @@
 'use client'
 import { usePreferences } from '../../contexts/PreferencesContext'
+import { useContrastStyles } from '../../hooks/useContrastStyles'
 import { SliderControl } from '../ui/SliderControl'
 
 const FONT_SIZES = ['small', 'medium', 'large'] as const
@@ -11,10 +12,11 @@ const SPACING_LABELS: Record<string, string> = { compact: 'Compacto', normal: 'N
 
 export function FontCard() {
   const { prefs, update } = usePreferences()
+  const contrast = useContrastStyles()
 
   return (
-    <section className="bg-white rounded-2xl border border-gray-100 p-5 mb-4">
-      <h2 className="text-base font-medium text-gray-800 mb-4">Tamanho e legibilidade</h2>
+    <section style={{ background: contrast.background, borderRadius: 16, border: `1px solid ${contrast.border}`, padding: 20, marginBottom: 16 }}>
+      <h2 style={{ fontSize: 16, fontWeight: 600, color: contrast.text, marginBottom: 16, margin: 0, marginBottom: 16 }}>Tamanho e legibilidade</h2>
       <SliderControl
         label="Tamanho da fonte"
         value={FONT_SIZES.indexOf(prefs.fontSize) + 1}
@@ -32,8 +34,7 @@ export function FontCard() {
         onChange={(v) => update({ spacing: SPACINGS[v - 1] })}
       />
       <div
-        className="mt-3 bg-gray-50 rounded-xl p-4 text-gray-700 transition-all"
-        style={{ fontSize: FONT_PX[prefs.fontSize] }}
+        style={{ marginTop: 12, padding: 16, background: contrast.primaryLight, borderRadius: 12, color: contrast.text, transition: 'all 0.15s', fontSize: FONT_PX[prefs.fontSize] }}
         aria-label="Prévia do texto com as configurações atuais"
       >
         Texto de exemplo. Ajuste o tamanho até ficar confortável para ler.
