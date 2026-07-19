@@ -101,7 +101,7 @@ export default function NovaTarefaPage() {
     try {
       await activityRepository.create(newActivity)
       setSuccess(true)
-      setTimeout(() => router.push('/atividades'), 2200)
+      setTimeout(() => router.push('/tarefas'), 2200)
     } catch (error) {
       console.error('Erro ao criar tarefa:', error)
     }

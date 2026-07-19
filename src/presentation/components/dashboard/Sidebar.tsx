@@ -5,14 +5,14 @@ import { usePreferences } from '../../contexts/PreferencesContext'
 
 const NAV_BASIC = [
   { href: '/dashboard',    label: 'Dashboard',     icon: <HomeIcon /> },
-  { href: '/atividades',   label: 'Minhas Tarefas', icon: <TaskIcon /> },
+  { href: '/tarefas',      label: 'Minhas Tarefas', icon: <TaskIcon /> },
   { href: '/perfil',       label: 'Perfil',        icon: <UserIcon /> },
   { href: '/configuracoes',       label: 'Configurações', icon: <CogIcon /> },
 ]
 
 const NAV_ADVANCED = [
   { href: '/dashboard',    label: 'Dashboard',     icon: <HomeIcon /> },
-  { href: '/atividades',   label: 'Minhas Tarefas', icon: <TaskIcon /> },
+  { href: '/tarefas',      label: 'Minhas Tarefas', icon: <TaskIcon /> },
   { href: '/calendario',   label: 'Calendário',    icon: <CalIcon /> },
   { href: '/lembretes',    label: 'Lembretes',     icon: <BellIcon /> },
   { href: '/historico',    label: 'Histórico',     icon: <HistIcon /> },

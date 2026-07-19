@@ -6,6 +6,7 @@ import { usePreferences } from '../../contexts/PreferencesContext'
 interface ActivityItemProps {
   activity: Activity
   onToggle: (id: string, status: Activity['status']) => void
+  onGuide?: (activity: Activity) => void
 }
 
 const BADGE_STYLES: Record<Activity['status'], { label: string; colors: Record<string, { bg: string; text: string }> }> = {
@@ -14,7 +15,7 @@ const BADGE_STYLES: Record<Activity['status'], { label: string; colors: Record<s
   overdue: { label: 'Atrasado', colors: { default: { bg: '#fee2e2', text: '#dc2626' }, high: { bg: '#ffcccc', text: '#cc0000' }, maximum: { bg: '#ffff00', text: '#000000' } } },
 }
 
-export function ActivityItem({ activity, onToggle }: ActivityItemProps) {
+export function ActivityItem({ activity, onToggle, onGuide }: ActivityItemProps) {
   const contrast = useContrastStyles()
   const { prefs } = usePreferences()
   const badge = BADGE_STYLES[activity.status]
@@ -24,6 +25,21 @@ export function ActivityItem({ activity, onToggle }: ActivityItemProps) {
   const badgeColors = badge.colors[contrastLevel] || badge.colors.default
   const spacingMap = { compact: '12px', normal: '16px', wide: '24px' }
   const spacingValue = spacingMap[prefs.spacing]
+  const hasSteps = activity.steps && activity.steps.length > 0
+
+  const handleClick = () => {
+    if (hasSteps && onGuide && !isDone) {
+      onGuide(activity)
+    } else {
+      onToggle(activity.id, activity.status)
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleClick()
+    }
+  }
 
   return (
     <li
@@ -39,12 +55,12 @@ export function ActivityItem({ activity, onToggle }: ActivityItemProps) {
         transition: 'all 0.15s',
         opacity: isDone ? 0.6 : 1,
       }}
-      onClick={() => onToggle(activity.id, activity.status)}
+      onClick={handleClick}
       role="checkbox"
       aria-checked={isDone}
       aria-label={`${activity.title} — ${badge.label}`}
       tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && onToggle(activity.id, activity.status)}
+      onKeyDown={handleKeyDown}
     >
       <div
         style={{
