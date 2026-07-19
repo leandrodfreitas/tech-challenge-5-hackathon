@@ -55,7 +55,7 @@ export function Topbar() {
       justifyContent: 'space-between',
       flexShrink: 0,
     }}>
-      <h1 style={{ fontSize: 17, fontWeight: 600, color: '#1a1a2e' }}>{title}</h1>
+      <h1 style={{ fontSize: '1.0625rem', fontWeight: 600, color: '#1a1a2e' }}>{title}</h1>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         <button aria-label="Pesquisar" style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', padding: 4 }}>
           <SearchIcon />
@@ -65,7 +65,7 @@ export function Topbar() {
           <span style={{
             position: 'absolute', top: 0, right: 0,
             width: 16, height: 16, borderRadius: '50%',
-            background: '#ef4444', fontSize: 10, fontWeight: 700,
+            background: '#ef4444', fontSize: '0.625rem', fontWeight: 700,
             color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>3</span>
         </button>
@@ -73,7 +73,7 @@ export function Topbar() {
           display: 'flex', alignItems: 'center', gap: 6,
           padding: '6px 14px', borderRadius: 20,
           border: '1.5px solid #e5e7eb', background: '#fff',
-          fontSize: 13, color: '#374151', cursor: 'pointer', fontWeight: 500,
+          fontSize: '0.8125rem', color: '#374151', cursor: 'pointer', fontWeight: 500,
         }}>
           <HelpIcon /> Ajuda
         </button>

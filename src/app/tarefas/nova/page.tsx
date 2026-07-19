@@ -1,6 +1,8 @@
 'use client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { activityRepository } from '../../../infrastructure/container'
+import { Activity } from '../../../domain/entities/Activity'
 
 type Priority = 'Baixa' | 'Média' | 'Alta'
 type Step = 1 | 2 | 3
@@ -79,9 +81,30 @@ export default function NovaTarefaPage() {
                 : step === 2 ? true
                 : true
 
-  const handleSubmit = () => {
-    setSuccess(true)
-    setTimeout(() => router.push('/tarefas'), 2200)
+  const handleSubmit = async () => {
+    const scheduledDate = date && time ? new Date(`${date}T${time}`) : new Date(date)
+    
+    const newActivity: Omit<Activity, 'id'> = {
+      userId: 'u1',
+      title: title.trim(),
+      scheduledAt: scheduledDate,
+      status: 'pending',
+      steps: stepTexts
+        .filter(Boolean)
+        .map((description, index) => ({
+          order: index + 1,
+          description,
+          isDone: false,
+        }))
+    }
+
+    try {
+      await activityRepository.create(newActivity)
+      setSuccess(true)
+      setTimeout(() => router.push('/atividades'), 2200)
+    } catch (error) {
+      console.error('Erro ao criar tarefa:', error)
+    }
   }
 
   if (success) {
