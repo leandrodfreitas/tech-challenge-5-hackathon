@@ -7,6 +7,9 @@ export interface Activity {
   scheduledAt: Date
   status: ActivityStatus
   steps?: ActivityStep[]
+  completedAt?: Date | null
+  priority?: 'low' | 'medium' | 'high'
+  reminderId?: string
 }
 
 export interface ActivityStep {

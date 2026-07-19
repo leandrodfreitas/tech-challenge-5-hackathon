@@ -76,6 +76,14 @@ export class LocalStorageActivityRepository implements IActivityRepository {
     return this.load().filter((a) => a.userId === userId)
   }
 
+  async findCompleted(userId: string): Promise<Activity[]> {
+    return this.load().filter((a) => a.userId === userId && a.status === 'done')
+  }
+
+  async findPending(userId: string): Promise<Activity[]> {
+    return this.load().filter((a) => a.userId === userId && (a.status === 'pending' || a.status === 'overdue'))
+  }
+
   async create(activity: Omit<Activity, 'id'>): Promise<Activity> {
     const items = this.load()
     const newItem: Activity = { ...activity, id: crypto.randomUUID() }
@@ -85,6 +93,11 @@ export class LocalStorageActivityRepository implements IActivityRepository {
 
   async updateStatus(id: string, status: Activity['status']): Promise<void> {
     const items = this.load().map((a) => (a.id === id ? { ...a, status } : a))
+    this.save(items)
+  }
+
+  async updateCompletedAt(id: string, completedAt: Date | null): Promise<void> {
+    const items = this.load().map((a) => (a.id === id ? { ...a, completedAt } : a))
     this.save(items)
   }
 }

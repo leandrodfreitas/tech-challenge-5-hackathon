@@ -1,5 +1,6 @@
 import { IUserRepository }     from '../domain/repositories/IUserRepository'
 import { IActivityRepository } from '../domain/repositories/IActivityRepository'
+import { IReminderRepository } from '../domain/repositories/IReminderRepository'
 
 // Alterne aqui para trocar a implementação sem mexer em mais nada
 const USE_FIREBASE = process.env.NEXT_PUBLIC_USE_FIREBASE === 'true'
@@ -22,5 +23,15 @@ function makeActivityRepository(): IActivityRepository {
   return new LocalStorageActivityRepository()
 }
 
+function makeReminderRepository(): IReminderRepository {
+  if (USE_FIREBASE) {
+    const { FirebaseReminderRepository } = require('./firebase/FirebaseReminderRepository')
+    return new FirebaseReminderRepository()
+  }
+  const { LocalStorageReminderRepository } = require('./storage/LocalStorageReminderRepository')
+  return new LocalStorageReminderRepository()
+}
+
 export const userRepository:     IUserRepository     = makeUserRepository()
 export const activityRepository: IActivityRepository = makeActivityRepository()
+export const reminderRepository: IReminderRepository = makeReminderRepository()

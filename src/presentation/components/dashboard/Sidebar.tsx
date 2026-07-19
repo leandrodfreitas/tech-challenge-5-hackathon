@@ -6,6 +6,7 @@ import { usePreferences } from '../../contexts/PreferencesContext'
 const NAV_BASIC = [
   { href: '/dashboard',    label: 'Dashboard',     icon: <HomeIcon /> },
   { href: '/tarefas',      label: 'Minhas Tarefas', icon: <TaskIcon /> },
+  { href: '/historico',    label: 'Histórico',     icon: <HistIcon /> },
   { href: '/perfil',       label: 'Perfil',        icon: <UserIcon /> },
   { href: '/configuracoes',       label: 'Configurações', icon: <CogIcon /> },
 ]

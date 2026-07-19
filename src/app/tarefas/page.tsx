@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useActivities } from '../../presentation/hooks/useActivities'
-import { ActivityItem } from '../../presentation/components/atividades/ActivityItem'
+import { ActivityItemWithReminder } from '../../presentation/components/atividades/ActivityItemWithReminder'
 import { GuidedActivityFlow } from '../../presentation/components/atividades/GuidedActivityFlow'
 import { FeedbackBanner } from '../../presentation/components/ui/FeedbackBanner'
 import { Activity } from '../../domain/entities/Activity'
@@ -82,7 +82,7 @@ export default function TarefasPage() {
             ) : (
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {filtered.map((activity) => (
-                  <ActivityItem
+                  <ActivityItemWithReminder
                     key={activity.id}
                     activity={activity}
                     onToggle={handleToggle}

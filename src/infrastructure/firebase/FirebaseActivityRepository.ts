@@ -30,6 +30,20 @@ export class FirebaseActivityRepository implements IActivityRepository {
     return snap.docs.map(d => toActivity(d.id, d.data() as Record<string, unknown>))
   }
 
+  async findCompleted(userId: string): Promise<Activity[]> {
+    const q    = query(collection(db, this.col), where('userId', '==', userId), where('status', '==', 'done'))
+    const snap = await getDocs(q)
+    return snap.docs.map(d => toActivity(d.id, d.data() as Record<string, unknown>))
+  }
+
+  async findPending(userId: string): Promise<Activity[]> {
+    const q    = query(collection(db, this.col), where('userId', '==', userId))
+    const snap = await getDocs(q)
+    return snap.docs
+      .map(d => toActivity(d.id, d.data() as Record<string, unknown>))
+      .filter((a) => a.status === 'pending' || a.status === 'overdue')
+  }
+
   async create(activity: Omit<Activity, 'id'>): Promise<Activity> {
     const ref = await addDoc(collection(db, this.col), {
       ...activity,
@@ -41,5 +55,16 @@ export class FirebaseActivityRepository implements IActivityRepository {
   async updateStatus(id: string, status: Activity['status']): Promise<void> {
     const ref = doc(db, this.col, id)
     await updateDoc(ref, { status })
+  }
+
+  async updateCompletedAt(id: string, completedAt: Date | null): Promise<void> {
+    const ref = doc(db, this.col, id)
+    const data: Record<string, unknown> = {}
+    if (completedAt) {
+      data.completedAt = Timestamp.fromDate(completedAt)
+    } else {
+      data.completedAt = null
+    }
+    await updateDoc(ref, data)
   }
 }

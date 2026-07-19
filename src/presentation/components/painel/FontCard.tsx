@@ -16,7 +16,7 @@ export function FontCard() {
 
   return (
     <section style={{ background: contrast.background, borderRadius: 16, border: `1px solid ${contrast.border}`, padding: 20, marginBottom: 16 }}>
-      <h2 style={{ fontSize: 16, fontWeight: 600, color: contrast.text, marginBottom: 16, margin: 0, marginBottom: 16 }}>Tamanho e legibilidade</h2>
+      <h2 style={{ fontSize: 16, fontWeight: 600, color: contrast.text, margin: 0, marginBottom: 16 }}>Tamanho e legibilidade</h2>
       <SliderControl
         label="Tamanho da fonte"
         value={FONT_SIZES.indexOf(prefs.fontSize) + 1}

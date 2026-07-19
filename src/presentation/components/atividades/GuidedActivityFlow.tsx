@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Activity } from '../../domain/entities/Activity'
+import { Activity } from '../../../domain/entities/Activity'
 
 interface GuidedActivityFlowProps {
   activity: Activity
