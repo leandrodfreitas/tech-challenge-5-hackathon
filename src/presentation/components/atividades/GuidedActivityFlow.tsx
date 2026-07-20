@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { Activity } from '../../../domain/entities/Activity'
+import { IconClipboard, IconCheckmark } from '../icons'
 
 interface GuidedActivityFlowProps {
   activity: Activity
@@ -93,8 +94,9 @@ export function GuidedActivityFlow({ activity, onComplete, onCancel }: GuidedAct
             fontSize: '2rem',
             marginBottom: 16,
             lineHeight: 1,
+            color: 'var(--primary)',
           }}>
-            📋
+            <IconClipboard />
           </div>
           <h3 style={{
             fontSize: '1.25rem',
@@ -189,9 +191,13 @@ export function GuidedActivityFlow({ activity, onComplete, onCancel }: GuidedAct
                 fontWeight: 600,
                 cursor: 'pointer',
                 transition: 'var(--transition)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8
               }}
+              aria-label="Concluir tarefa"
             >
-              ✓ Concluir
+              <IconCheckmark style={{ color: 'white' }} /> Concluir
             </button>
           )}
         </div>

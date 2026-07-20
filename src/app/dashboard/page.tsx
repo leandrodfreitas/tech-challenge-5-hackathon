@@ -9,6 +9,7 @@ import { useContrastStyles } from '../../presentation/hooks/useContrastStyles'
 import { Activity } from '../../domain/entities/Activity'
 import { UserPreferences } from '../../domain/entities/User'
 import { FONT_SIZE_CHART_MAP, FONT_SIZE_MAP, FONT_SIZE_HEADING_MAP, SPACING_MAP } from '../../presentation/constants/theme'
+import { IconWave, IconCheckmark, IconBell, IconHeart } from '../../presentation/components/icons'
 
 function CircleProgress({ pct, prefs }: { pct: number; prefs: UserPreferences }) {
   const r = 45
@@ -47,9 +48,9 @@ function StatCard({ icon, iconBg, value, label, green, fontSize }: { icon: React
   )
 }
 
-function PendingIcon() { return <svg width="22" height="22" fill="none" stroke="#2F80ED" strokeWidth="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg> }
-function DoneIcon()    { return <svg width="22" height="22" fill="none" stroke="#16a34a" strokeWidth="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> }
-function BellSmIcon()  { return <svg width="22" height="22" fill="none" stroke="#2F80ED" strokeWidth="1.8" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> }
+function PendingIcon() { return <svg width="22" height="22" fill="none" stroke="#2F80ED" strokeWidth="1.8" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg> }
+function DoneIcon()    { return <svg width="22" height="22" fill="none" stroke="#16a34a" strokeWidth="1.8" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> }
+function BellSmIcon()  { return <svg width="22" height="22" fill="none" stroke="#2F80ED" strokeWidth="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> }
 
 export default function DashboardPage() {
   const { activities, toggle } = useActivities('u1')
@@ -93,7 +94,7 @@ export default function DashboardPage() {
     <div style={{ padding: spacingValue }}>
       {/* Saudação */}
       <div style={{ marginBottom: spacingValue }}>
-        <h2 style={{ fontSize: headingFontSize, fontWeight: 700, color: contrast.text }}>Olá, Maria! 👋</h2>
+        <h2 style={{ fontSize: headingFontSize, fontWeight: 700, color: contrast.text, display: 'flex', alignItems: 'center', gap: 8 }}>Olá, Maria! <IconWave style={{ color: contrast.text }} /></h2>
         <p style={{ fontSize: labelFontSize, color: '#6b7280', marginTop: 4 }}>Vamos tornar seu dia produtivo e tranquilo.</p>
       </div>
 
@@ -181,9 +182,10 @@ export default function DashboardPage() {
                     <button 
                       onClick={() => handleToggle(activity.id, activity.status)} 
                       aria-label={activity.status === 'done' ? `Desmarcar ${activity.title}` : `Concluir ${activity.title}`} 
-                      aria-pressed={activity.status === 'done'} 
+                      aria-pressed={activity.status === 'done'}
+                      type="button"
                       style={{ width: 24, height: 24, borderRadius: '50%', flexShrink: 0, border: activity.status === 'done' ? 'none' : `1.5px solid ${contrast.border}`, background: activity.status === 'done' ? '#16a34a' : 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: prefs.smoothAnimations ? 'all 0.15s' : 'none' }}>
-                      {activity.status === 'done' && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3"><path d="m5 12 5 5L20 7"/></svg>}
+                      {activity.status === 'done' && <IconCheckmark style={{ color: '#fff' }} />}
                     </button>
                   </li>
                 )
@@ -197,7 +199,7 @@ export default function DashboardPage() {
           <p style={{ fontSize: labelFontSize, fontWeight: 600, color: '#15803d', marginBottom: spacingValue }}>Você está indo bem!</p>
           <CircleProgress pct={pct} prefs={prefs} />
           <p style={{ fontSize: labelFontSize, color: '#374151', marginTop: 12, lineHeight: 1.5 }}>das tarefas concluídas<br />esta semana</p>
-          <p style={{ fontSize: labelFontSize, color: '#16a34a', fontWeight: 600, marginTop: 8 }}>Continue assim! ♥</p>
+          <p style={{ fontSize: labelFontSize, color: '#16a34a', fontWeight: 600, marginTop: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>Continue assim! <IconHeart style={{ color: '#16a34a' }} /></p>
           <Link href="/historico" style={{ marginTop: spacingValue, fontSize: '12px', color: '#16a34a', textDecoration: 'underline', cursor: 'pointer' }}>
             Ver histórico completo
           </Link>

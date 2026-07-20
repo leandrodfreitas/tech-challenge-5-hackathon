@@ -2,6 +2,7 @@
 import { Activity } from '../../../domain/entities/Activity'
 import { useContrastStyles } from '../../hooks/useContrastStyles'
 import { usePreferences } from '../../contexts/PreferencesContext'
+import { IconCheckmark } from '../icons'
 
 interface HistoryListProps {
   activities: Activity[]
@@ -31,7 +32,7 @@ export function HistoryList({ activities, onRestart }: HistoryListProps) {
         }}
       >
         <p style={{ fontSize, color: contrast.text }}>
-          📭 Nenhuma atividade concluída ainda
+          Nenhuma atividade concluída ainda
         </p>
       </div>
     )
@@ -80,18 +81,17 @@ export function HistoryList({ activities, onRestart }: HistoryListProps) {
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: 'white',
-                  fontSize: '20px',
                   flexShrink: 0,
                 }}
               >
-                ✓
+                <IconCheckmark style={{ color: 'white', width: 18, height: 18 }} />
               </div>
               <div style={{ flex: 1 }}>
                 <h3 style={{ fontSize, fontWeight: 'bold', margin: '0 0 4px 0' }}>
                   {activity.title}
                 </h3>
                 <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>
-                  ✓ Concluída em {completedDate}
+                  Concluída em {completedDate}
                 </p>
               </div>
             </div>
@@ -135,7 +135,7 @@ export function HistoryList({ activities, onRestart }: HistoryListProps) {
                 }}
                 aria-label={`Repetir atividade: ${activity.title}`}
               >
-                🔄 Repetir Atividade
+                Repetir Atividade
               </button>
             )}
           </div>
