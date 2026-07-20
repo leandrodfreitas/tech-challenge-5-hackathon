@@ -11,7 +11,7 @@ export function Toggle({ checked, onChange, label }: ToggleProps) {
   const contrast = useContrastStyles()
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 12, paddingBottom: 12, borderBottom: `1px solid ${contrast.border}`, lastChild: { borderBottom: 'none' } }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 12, paddingBottom: 12, borderBottom: `1px solid ${contrast.border}` }}>
       <span style={{ fontSize: 15, color: contrast.text }}>{label}</span>
       <button
         role="switch"
