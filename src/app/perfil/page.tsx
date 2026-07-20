@@ -1,6 +1,5 @@
 'use client'
 import { usePreferences } from '../../presentation/contexts/PreferencesContext'
-import { IconFont, IconContrast, IconNavigation, IconBell, IconSecurity } from '../../presentation/components/icons'
 
 const FONT_LABELS = { small: 'Pequeno', medium: 'Médio', large: 'Grande' }
 const CONTRAST_LABELS = { default: 'Padrão', high: 'Alto', maximum: 'Máximo' }
@@ -10,11 +9,11 @@ export default function PerfilPage() {
   const { prefs } = usePreferences()
 
   const items = [
-    { icon: <IconFont />, label: 'Tamanho da fonte', value: FONT_LABELS[prefs.fontSize] },
-    { icon: <IconContrast />, label: 'Contraste', value: CONTRAST_LABELS[prefs.contrast] },
-    { icon: <IconNavigation />, label: 'Modo de navegação', value: MODE_LABELS[prefs.navigationMode] },
-    { icon: <IconBell />, label: 'Lembretes', value: prefs.remindersEnabled ? 'Ativados' : 'Desativados' },
-    { icon: <IconSecurity />, label: 'Confirmações extras', value: prefs.extraConfirmation ? 'Ativadas' : 'Desativadas' },
+    { icon: 'Aa', label: 'Tamanho da fonte', value: FONT_LABELS[prefs.fontSize] },
+    { icon: '◑', label: 'Contraste', value: CONTRAST_LABELS[prefs.contrast] },
+    { icon: '⊞', label: 'Modo de navegação', value: MODE_LABELS[prefs.navigationMode] },
+    { icon: '🔔', label: 'Lembretes', value: prefs.remindersEnabled ? 'Ativados' : 'Desativados' },
+    { icon: '🛡', label: 'Confirmações extras', value: prefs.extraConfirmation ? 'Ativadas' : 'Desativadas' },
   ]
 
   return (
@@ -41,12 +40,10 @@ export default function PerfilPage() {
               className="flex items-center gap-3 py-3 border-b border-gray-100 last:border-0"
             >
               <span
-                className="w-9 h-9 rounded-lg bg-gray-50 flex items-center justify-center text-base flex-shrink-0"
+                className="w-9 h-9 rounded-lg bg-gray-50 flex items-center justify-center text-base"
                 aria-hidden="true"
               >
-                <span style={{ color: '#2F80ED', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {item.icon}
-                </span>
+                {item.icon}
               </span>
               <div className="flex-1">
                 <p className="text-sm font-medium text-gray-800">{item.label}</p>

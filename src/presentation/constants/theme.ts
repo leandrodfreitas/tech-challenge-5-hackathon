@@ -1,3 +1,8 @@
+/**
+ * Constantes centralizadas para temas e espaçamento
+ * Evita duplicação de código em componentes
+ */
+
 export const FONT_SIZE_MAP = {
   small: '12px',
   medium: '14px',

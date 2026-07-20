@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { Reminder } from '../../../domain/entities/Reminder'
 import { useContrastStyles } from '../../hooks/useContrastStyles'
 import { usePreferences } from '../../contexts/PreferencesContext'
-import { IconBell, IconClose } from '../icons'
 
 interface ReminderBannerProps {
   reminder: Reminder | null
@@ -53,9 +52,7 @@ export function ReminderBanner({ reminder, onDismiss, autoHideDuration = 5000 }:
       }}
     >
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: spacingValue }}>
-        <div style={{ fontSize: '24px', flexShrink: 0, color: 'white' }}>
-          <IconBell style={{ color: 'white' }} />
-        </div>
+        <div style={{ fontSize: '24px', flexShrink: 0 }}>🔔</div>
         <div style={{ flex: 1 }}>
           <h4 style={{ fontSize, fontWeight: 'bold', margin: '0 0 4px 0' }}>
             Lembrete
@@ -73,17 +70,15 @@ export function ReminderBanner({ reminder, onDismiss, autoHideDuration = 5000 }:
             background: 'transparent',
             color: 'white',
             border: 'none',
+            fontSize: '20px',
             cursor: 'pointer',
             padding: '0',
             flexShrink: 0,
             transition: `opacity ${animationDuration}`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
           }}
           aria-label="Fechar lembrete"
         >
-          <IconClose style={{ color: 'white' }} />
+          ✕
         </button>
       </div>
 

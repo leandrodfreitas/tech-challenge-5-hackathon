@@ -4,7 +4,6 @@ import { Activity } from '../../../domain/entities/Activity'
 import { Reminder, ReminderType, ReminderFrequency } from '../../../domain/entities/Reminder'
 import { useContrastStyles } from '../../hooks/useContrastStyles'
 import { usePreferences } from '../../contexts/PreferencesContext'
-import { IconWarning, IconClipboard, IconArrowBack, IconCheckmark } from '../icons'
 
 interface ReminderFormProps {
   activity: Activity
@@ -71,15 +70,15 @@ export function ReminderForm({ activity, onSubmit, onCancel, existingReminder }:
           transition: animationStyle,
         }}
       >
-        <h3 style={{ fontSize, fontWeight: 'bold', margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
-          <IconWarning style={{ color: contrast.text }} /> Confirmar Lembrete
+        <h3 style={{ fontSize, fontWeight: 'bold', margin: 0 }}>
+          ⚠️ Confirmar Lembrete
         </h3>
         <p style={{ fontSize, margin: 0, lineHeight: '1.6' }}>
           Você tem certeza que quer adicionar este lembrete?
         </p>
         <div style={{ backgroundColor: contrast.border, padding: spacingValue, borderRadius: 8 }}>
-          <p style={{ fontSize: '14px', margin: '0 0 8px 0', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 8 }}>
-            <IconClipboard style={{ width: 16, height: 16, color: contrast.text }} /> Resumo:
+          <p style={{ fontSize: '14px', margin: '0 0 8px 0', fontWeight: 'bold' }}>
+            📋 Resumo:
           </p>
           <p style={{ fontSize: '14px', margin: '4px 0' }}>
             • Tipo: {type === 'none' ? 'Sem lembretes' : 'Notificação'}
@@ -108,14 +107,9 @@ export function ReminderForm({ activity, onSubmit, onCancel, existingReminder }:
               fontWeight: 'bold',
               cursor: 'pointer',
               transition: animationStyle,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 8
             }}
-            aria-label="Voltar para editar lembrete"
           >
-            <IconArrowBack style={{ width: 16, height: 16 }} /> Voltar
+            ← Voltar
           </button>
           <button
             onClick={handleSubmit}
@@ -132,7 +126,7 @@ export function ReminderForm({ activity, onSubmit, onCancel, existingReminder }:
               transition: animationStyle,
             }}
           >
-            ┊ Confirmar
+            ✓ Confirmar
           </button>
         </div>
       </div>

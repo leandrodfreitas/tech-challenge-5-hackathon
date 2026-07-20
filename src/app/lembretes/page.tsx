@@ -7,7 +7,6 @@ import { usePreferences } from '../../presentation/contexts/PreferencesContext'
 import { useContrastStyles } from '../../presentation/hooks/useContrastStyles'
 import { FONT_SIZE_MAP, FONT_SIZE_HEADING_MAP, SPACING_MAP } from '../../presentation/constants/theme'
 import { Reminder } from '../../domain/entities/Reminder'
-import { IconBell, IconFrequencyDaily, IconFrequencyWeekly, IconMobile, IconDisabled } from '../../presentation/components/icons'
 
 export default function LembretesPage() {
   const { reminders, loadReminders, deleteReminder, updateReminder } = useReminders()
@@ -37,25 +36,16 @@ export default function LembretesPage() {
   const totalCount = reminders.length
 
   const getFrequencyLabel = (freq: string) => {
-    const freqMap: Record<string, { label: string; icon: React.ReactNode }> = {
-      'once': { label: 'Uma vez', icon: <IconBell style={{ width: 16, height: 16 }} /> },
-      'daily': { label: 'Diariamente', icon: <IconFrequencyDaily style={{ width: 16, height: 16 }} /> },
-      'weekly': { label: 'Semanalmente', icon: <IconFrequencyWeekly style={{ width: 16, height: 16 }} /> }
+    const freqMap: Record<string, string> = {
+      'once': '🔔 Uma vez',
+      'daily': '📅 Diariamente',
+      'weekly': '📆 Semanalmente'
     }
-    const entry = freqMap[freq]
-    return entry ? <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>{entry.icon} {entry.label}</span> : freq
+    return freqMap[freq] || freq
   }
 
   const getTypeLabel = (type: string) => {
-    return type === 'push' ? (
-      <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-        <IconMobile style={{ width: 16, height: 16 }} /> Push
-      </span>
-    ) : (
-      <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-        <IconDisabled style={{ width: 16, height: 16 }} /> Desativado
-      </span>
-    )
+    return type === 'push' ? '📲 Push' : '✖️ Desativado'
   }
 
   const handleToggle = async (reminderId: string, currentState: boolean) => {
@@ -73,8 +63,8 @@ export default function LembretesPage() {
     <div style={{ padding: spacingValue }}>
       {/* Header */}
       <div style={{ marginBottom: spacingValue }}>
-        <h1 style={{ fontSize: headingFontSize, fontWeight: 700, color: contrast.text, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
-          <IconBell style={{ color: contrast.text }} /> Meus Lembretes
+        <h1 style={{ fontSize: headingFontSize, fontWeight: 700, color: contrast.text, marginBottom: 8 }}>
+          🔔 Meus Lembretes
         </h1>
         <p style={{ fontSize: labelFontSize, color: '#6b7280' }}>
           Gerencie seus lembretes para não esquecer de suas tarefas importantes.
@@ -104,7 +94,7 @@ export default function LembretesPage() {
 
         {totalCount === 0 ? (
           <div style={{ padding: '40px 20px', textAlign: 'center', color: '#9ca3af' }}>
-            <p style={{ fontSize: labelFontSize, marginBottom: 12 }}>Você não tem nenhum lembrete ainda</p>
+            <p style={{ fontSize: labelFontSize, marginBottom: 12 }}>Você não tem nenhum lembrete ainda 😴</p>
             <Link href="/tarefas" style={{ fontSize: '12px', color: '#2F80ED', textDecoration: 'underline' }}>
               Adicionar lembrete para uma tarefa
             </Link>
