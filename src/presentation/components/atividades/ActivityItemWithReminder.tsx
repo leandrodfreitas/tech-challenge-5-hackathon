@@ -7,6 +7,7 @@ import { useReminders } from '../../hooks/useReminders'
 import { Reminder } from '../../../domain/entities/Reminder'
 import { useContrastStyles } from '../../hooks/useContrastStyles'
 import { usePreferences } from '../../contexts/PreferencesContext'
+import { SPACING_MAP } from '../../constants/theme'
 
 interface ActivityItemWithReminderProps {
   activity: Activity
@@ -25,8 +26,7 @@ export function ActivityItemWithReminder({
   const { prefs } = usePreferences()
 
   const reminder = getReminderByActivityId(activity.id)
-  const spacingMap = { compact: '12px', normal: '16px', wide: '24px' }
-  const spacingValue = spacingMap[prefs.spacing]
+  const spacingValue = SPACING_MAP[prefs.spacing]
   
   // Se lembretes não estão habilitados, não mostrar opção
   if (!prefs.remindersEnabled) {

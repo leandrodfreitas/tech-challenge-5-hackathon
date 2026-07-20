@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Reminder } from '../../domain/entities/Reminder'
 import { reminderRepository } from '../../infrastructure/container'
 import {
   CreateReminderUseCase,
   UpdateReminderUseCase,
   DeleteReminderUseCase,
-} from '../../domain/use-cases/index'
+} from '../../domain/use-cases'
+
+const createReminderUC = new CreateReminderUseCase(reminderRepository)
+const updateReminderUC = new UpdateReminderUseCase(reminderRepository)
+const deleteReminderUC = new DeleteReminderUseCase(reminderRepository)
 
 export function useReminders() {
   const [reminders, setReminders] = useState<Reminder[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
-  const createReminder = new CreateReminderUseCase(reminderRepository)
-  const updateReminder = new UpdateReminderUseCase(reminderRepository)
-  const deleteReminder = new DeleteReminderUseCase(reminderRepository)
-
-  const loadReminders = async (userId: string) => {
+  const loadReminders = useCallback(async (userId: string) => {
     try {
       setIsLoading(true)
       const data = await reminderRepository.findByUserId(userId)
@@ -25,9 +25,9 @@ export function useReminders() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [])
 
-  const handleCreateReminder = async (
+  const handleCreateReminder = useCallback(async (
     userId: string,
     activityId: string,
     type: Reminder['type'],
@@ -36,7 +36,7 @@ export function useReminders() {
     message: string
   ) => {
     try {
-      const reminder = await createReminder.execute(
+      const reminder = await createReminderUC.execute(
         userId,
         activityId,
         type,
@@ -50,11 +50,11 @@ export function useReminders() {
       console.error('Failed to create reminder:', error)
       throw error
     }
-  }
+  }, [])
 
-  const handleUpdateReminder = async (id: string, updates: Partial<Reminder>) => {
+  const handleUpdateReminder = useCallback(async (id: string, updates: Partial<Reminder>) => {
     try {
-      await updateReminder.execute(id, updates)
+      await updateReminderUC.execute(id, updates)
       setReminders((prev) =>
         prev.map((r) => (r.id === id ? { ...r, ...updates } : r))
       )
@@ -62,17 +62,17 @@ export function useReminders() {
       console.error('Failed to update reminder:', error)
       throw error
     }
-  }
+  }, [])
 
-  const handleDeleteReminder = async (id: string) => {
+  const handleDeleteReminder = useCallback(async (id: string) => {
     try {
-      await deleteReminder.execute(id)
+      await deleteReminderUC.execute(id)
       setReminders((prev) => prev.filter((r) => r.id !== id))
     } catch (error) {
       console.error('Failed to delete reminder:', error)
       throw error
     }
-  }
+  }, [])
 
   const getReminderByActivityId = (activityId: string) => {
     return reminders.find((r) => r.activityId === activityId)

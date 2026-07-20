@@ -39,7 +39,6 @@ export default function TarefasPage() {
       <main id="main-content" style={{ flex: 1, padding: 32 }}>
         <div>
 
-          {/* Header */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
             <h1 style={{ fontSize: 22, fontWeight: 700, color: '#1a1a2e' }}>Minhas Tarefas</h1>
             <Link href="/tarefas/nova" style={{
@@ -66,14 +65,12 @@ export default function TarefasPage() {
             ))}
           </div>
 
-          {/* Feedback Banner */}
           <FeedbackBanner
             message="Muito bem! Tarefa concluída."
             show={showFeedback}
             onHide={() => setShowFeedback(false)}
           />
 
-          {/* Lista */}
           <div style={{ background: '#fff', borderRadius: 16, border: '1px solid #e5e7eb', overflow: 'hidden', padding: '20px' }}>
             {filtered.length === 0 ? (
               <div style={{ padding: 40, textAlign: 'center', color: '#9ca3af', fontSize: 15 }}>

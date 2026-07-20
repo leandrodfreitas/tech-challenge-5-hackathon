@@ -5,13 +5,8 @@ import { useReminders } from '../../presentation/hooks/useReminders'
 import { useActivities } from '../../presentation/hooks/useActivities'
 import { usePreferences } from '../../presentation/contexts/PreferencesContext'
 import { useContrastStyles } from '../../presentation/hooks/useContrastStyles'
-
-interface ReminderFunctions {
-  reminders: any[]
-  loadReminders: (userId: string) => Promise<void>
-  handleDeleteReminder: (id: string) => Promise<void>
-  handleUpdateReminder: (id: string, updates: any) => Promise<void>
-}
+import { FONT_SIZE_MAP, FONT_SIZE_HEADING_MAP, SPACING_MAP } from '../../presentation/constants/theme'
+import { Reminder } from '../../domain/entities/Reminder'
 
 export default function LembretesPage() {
   const { reminders, loadReminders, deleteReminder, updateReminder } = useReminders()
@@ -23,12 +18,9 @@ export default function LembretesPage() {
     loadReminders('u1')
   }, [])
 
-  const spacingMap = { compact: '12px', normal: '16px', wide: '24px' }
-  const spacingValue = spacingMap[prefs.spacing]
-  const fontMap = { small: '12px', medium: '14px', large: '16px' }
-  const labelFontSize = fontMap[prefs.fontSize]
-  const headingMap = { small: '18px', medium: '22px', large: '26px' }
-  const headingFontSize = headingMap[prefs.fontSize]
+  const spacingValue = SPACING_MAP[prefs.spacing]
+  const labelFontSize = FONT_SIZE_MAP[prefs.fontSize]
+  const headingFontSize = FONT_SIZE_HEADING_MAP[prefs.fontSize]
 
   const remindersWithActivity = useMemo(() => {
     return reminders.map(reminder => {

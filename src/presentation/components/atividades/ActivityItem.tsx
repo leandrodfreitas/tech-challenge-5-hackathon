@@ -2,6 +2,7 @@
 import { Activity } from '../../../domain/entities/Activity'
 import { useContrastStyles } from '../../hooks/useContrastStyles'
 import { usePreferences } from '../../contexts/PreferencesContext'
+import { SPACING_MAP } from '../../constants/theme'
 
 interface ActivityItemProps {
   activity: Activity
@@ -23,8 +24,7 @@ export function ActivityItem({ activity, onToggle, onGuide }: ActivityItemProps)
   
   const contrastLevel = prefs.contrast
   const badgeColors = badge.colors[contrastLevel] || badge.colors.default
-  const spacingMap = { compact: '12px', normal: '16px', wide: '24px' }
-  const spacingValue = spacingMap[prefs.spacing]
+  const spacingValue = SPACING_MAP[prefs.spacing]
   const hasSteps = activity.steps && activity.steps.length > 0
 
   const handleClick = () => {
